@@ -1,0 +1,29 @@
+{
+  "recipes": [
+    {
+      "title": "Banana Bread",
+      "image": "https://images.unsplash.com/photo-1497534547324-0ebb3f052e88?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1590&q=80",
+      "ingredients": [
+        "Polohruba Muka",
+        "Vajcia",
+        "Bannany",
+        "Cukor",
+        "Roztopene Maslo",
+        "Cokolada"
+      ],
+      "directions": "Rozmackaj banany, zmiesaj s vajcami a cukrom. Pridaj muku, vsetko dobre vymiesaj, nakoneic pridaj roztopene maslo a nasekanu cokoladu. Vylej na plech na chlebik a pec cca hodinu pri 165 stupnoch"
+    },
+    {
+      "title": "Palacinky",
+      "image": "https://images.unsplash.com/photo-1584278860047-22db9ff82bed?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
+      "ingredients": [
+        "Hladka muka",
+        "Cukor",
+        "Mlieko",
+        "Vajcia",
+        "Vanilkovy cukor"
+      ],
+      "directions": "Zmiesaj vsetko dokopy a na rozpalenej panvici potrenej olejom opekaj palacinky"
+    }
+  ]
+}
