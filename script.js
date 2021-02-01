@@ -11,6 +11,7 @@ showRecipes();
 
 async function showRecipes() {
   const response = await fetch("/recipes.json");
+  // const response = await fetch("http://localhost:8080/recipes/index.php");
   const data = await response.json();
 
   data.recipes.forEach(createRecipeEl);
