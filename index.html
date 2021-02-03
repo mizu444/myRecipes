@@ -21,7 +21,7 @@
         </button>
         <input
           type="text"
-          class="input"
+          class="search"
           placeholder="Search for your favourite recipe..."
         />
       </header>
@@ -37,6 +37,41 @@
           <div class="directions" id="modalDirections"></div>
         </div>
       </div>
+
+      <form class="form" id="add-form">
+        <div class="form-content">
+          <span class="close" id="close">&times;</span>
+          <h3>Create new recipe</h3>
+          <input
+            type="text"
+            class="input title"
+            id="input-title"
+            placeholder="Enter title of the recipe"
+            required
+          />
+
+          <div class="ingredients-container">
+            <input
+              type="text"
+              class="input ingredients"
+              id="input-ingredients"
+              placeholder="Enter ingredient"
+              required
+            />
+            <span class="new-ingredient">
+              <i class="fas fa-plus-circle"></i>
+            </span>
+          </div>
+
+          <textarea
+            class="input directions"
+            id="input-directions"
+            placeholder="Enter directions"
+            required
+          ></textarea>
+          <button class="submit-btn" id="submit">Submit</button>
+        </div>
+      </form>
 
       <div class="recipes-container"></div>
     </div>
