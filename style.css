@@ -30,7 +30,7 @@ h1 {
   padding: 15px 0;
 }
 
-.add-recipe {
+.add-new-btn {
   background-color: rgb(248, 248, 222);
   cursor: pointer;
   position: absolute;
@@ -46,12 +46,12 @@ h1 {
   outline: none;
 }
 
-.add-recipe:hover {
+.add-new-btn:hover {
   color: rgb(192, 57, 57);
   border: 2px solid rgb(192, 57, 57);
 }
 
-.add-recipe:active {
+.add-new-btn:active {
   transform: translateX(-50%) scale(0.98);
 }
 
@@ -119,7 +119,7 @@ h1 {
 }
 
 .form {
-  /* display: none; */
+  display: none;
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
@@ -160,12 +160,28 @@ h1 {
   outline: none;
 }
 
-.form-content .new-ingredient {
+.ingredients-container {
+  position: relative;
+}
+
+.ingredients-container .remove-ingredient {
+  position: absolute;
+  top: 14px;
+  left: 146px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.ingredients-container .plus-ingredient {
+  position: absolute;
+  top: 11px;
+  left: 170px;
   cursor: pointer;
   font-size: 18px;
 }
 
-.form-content .new-ingredient:hover {
+.ingredients-container .plus-ingredient:hover,
+.ingredients-container .remove-ingredient:hover {
   color: rgb(75, 77, 58);
 }
 
@@ -233,7 +249,8 @@ h1 {
   margin: 12px 0;
 }
 
-.close {
+.close-modal-btn,
+.close-form-btn {
   position: absolute;
   top: 0;
   right: 12px;

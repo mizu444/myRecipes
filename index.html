@@ -16,7 +16,7 @@
     <div class="main">
       <header class="header">
         <h1>My Recipes</h1>
-        <button class="add-recipe">
+        <button class="add-new-btn" id="add-new-btn">
           Add New <i class="fas fa-plus-circle" style="font-size: 14px"></i>
         </button>
         <input
@@ -28,7 +28,7 @@
 
       <div class="modal" id="modal">
         <div class="modal-content">
-          <span class="close" id="close">&times;</span>
+          <span class="close-modal-btn" id="close-modal-btn">&times;</span>
           <h3 class="title" id="modalTitle"></h3>
           <div class="ingredients">
             <span>Ingredients:</span>
@@ -40,7 +40,7 @@
 
       <form class="form" id="add-form">
         <div class="form-content">
-          <span class="close" id="close">&times;</span>
+          <span class="close-form-btn" id="close-form-btn">&times;</span>
           <h3>Create new recipe</h3>
           <input
             type="text"
@@ -58,7 +58,10 @@
               placeholder="Enter ingredient"
               required
             />
-            <span class="new-ingredient">
+            <span class="remove-ingredient">
+              <i class="fas fa-times"></i>
+            </span>
+            <span class="plus-ingredient">
               <i class="fas fa-plus-circle"></i>
             </span>
           </div>
@@ -69,8 +72,9 @@
             placeholder="Enter directions"
             required
           ></textarea>
-          <button class="submit-btn" id="submit">Submit</button>
+          <button type="submit" class="submit-btn" id="submit">Submit</button>
         </div>
+
       </form>
 
       <div class="recipes-container"></div>

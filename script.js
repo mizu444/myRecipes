@@ -2,10 +2,14 @@ const main = document.querySelector(".main");
 const recipesContainer = document.querySelector(".recipes-container");
 const recipesEl = document.querySelectorAll(".recipe");
 const modal = document.getElementById("modal");
-const close = document.getElementById("close");
+const closeModalBtn = document.getElementById("close-modal-btn");
+const closeFormBtn = document.getElementById("close-form-btn");
 const modalTitle = document.getElementById("modalTitle");
 const modalIngredients = document.getElementById("modalIngredients");
 const modalDirections = document.getElementById("modalDirections");
+const addNewBtn = document.getElementById("add-new-btn");
+const addForm = document.getElementById("add-form");
+const inputs = document.querySelectorAll(".input");
 
 showRecipes();
 
@@ -52,9 +56,22 @@ function showModal(recipe) {
   modal.style.display = "block";
 }
 
-close.addEventListener("click", () => {
+addNewBtn.addEventListener("click", () => (addForm.style.display = "block"));
+addForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+});
+
+closeModalBtn.addEventListener("click", closeModal);
+closeFormBtn.addEventListener("click", closeForm);
+
+function closeModal() {
   modal.style.display = "none";
   modalTitle.innerHTML = "";
   modalIngredients.innerHTML = "";
   modalDirections.innerHTML = "";
-});
+}
+
+function closeForm() {
+  addForm.style.display = "none";
+  inputs.forEach((input) => (input.value = ""));
+}
