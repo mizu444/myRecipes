@@ -20,7 +20,7 @@
           Add New <i class="fas fa-plus-circle" style="font-size: 14px"></i>
         </button>
         <input
-          type="text"
+          type="search"
           class="search"
           placeholder="Search for your favourite recipe..."
         />
@@ -50,21 +50,7 @@
             required
           />
 
-          <div class="ingredients-container">
-            <input
-              type="text"
-              class="input ingredients"
-              id="input-ingredients"
-              placeholder="Enter ingredient"
-              required
-            />
-            <span class="remove-ingredient">
-              <i class="fas fa-times"></i>
-            </span>
-            <span class="plus-ingredient">
-              <i class="fas fa-plus-circle"></i>
-            </span>
-          </div>
+          <div class="ingredients-list"></div>
 
           <textarea
             class="input directions"
@@ -74,7 +60,6 @@
           ></textarea>
           <button type="submit" class="submit-btn" id="submit">Submit</button>
         </div>
-
       </form>
 
       <div class="recipes-container"></div>

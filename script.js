@@ -1,4 +1,5 @@
 const main = document.querySelector(".main");
+const search = document.querySelector(".search");
 const recipesContainer = document.querySelector(".recipes-container");
 const recipesEl = document.querySelectorAll(".recipe");
 const modal = document.getElementById("modal");
@@ -10,6 +11,7 @@ const modalDirections = document.getElementById("modalDirections");
 const addNewBtn = document.getElementById("add-new-btn");
 const addForm = document.getElementById("add-form");
 const inputs = document.querySelectorAll(".input");
+const ingredientsList = document.querySelector(".ingredients-list");
 
 showRecipes();
 
@@ -19,6 +21,12 @@ async function showRecipes() {
   const data = await response.json();
 
   data.recipes.forEach(createRecipeEl);
+}
+
+search.addEventListener("keydown", searchRecipe);
+
+function searchRecipe(e) {
+  console.log(e.target.value);
 }
 
 function createRecipeEl(recipe) {
@@ -61,6 +69,8 @@ addForm.addEventListener("submit", (e) => {
   e.preventDefault();
 });
 
+createIngredient("1243");
+
 closeModalBtn.addEventListener("click", closeModal);
 closeFormBtn.addEventListener("click", closeForm);
 
@@ -74,4 +84,59 @@ function closeModal() {
 function closeForm() {
   addForm.style.display = "none";
   inputs.forEach((input) => (input.value = ""));
+}
+
+function magic() {
+  const currentList = [...ingredientsList.children];
+  currentList.forEach((ingredient, idx) => {
+    if (currentList.length - 1 === idx) {
+      let addButton = ingredient.querySelector(".plus-ingredient");
+      if (addButton) {
+        return
+      } 
+      addButton = document.createElement("span");
+      addButton.classList.add("plus-ingredient");
+      const icon = document.createElement("i");
+      icon.classList = "fas fa-plus-circle";
+      addButton.appendChild(icon);
+      addButton.addEventListener("click", createIngredient);
+      ingredient.appendChild(addButton);
+    } else {
+      const addButton = ingredient.querySelector(".plus-ingredient");
+      if (addButton) {
+        ingredient.removeChild(addButton);
+      }
+    }
+  });
+}
+
+function createIngredient() {
+  const newIngrContainer = document.createElement("div");
+  newIngrContainer.classList.add("ingredient-container");
+
+  const removeButton = document.createElement("span");
+  removeButton.classList.add("remove-ingredient");
+  const removeIcon = document.createElement("i");
+  removeIcon.classList = "fas fa-times";
+  removeButton.appendChild(removeIcon);
+  removeButton.addEventListener("click", () => {
+    if (ingredientsList.children.length === 1) {
+      return;
+    }
+    ingredientsList.removeChild(newIngrContainer);
+
+    magic();
+  });
+
+  newIngrContainer.innerHTML = `
+            <input
+              type="text"
+              class="input ingredients"
+              placeholder="Enter ingredient"
+              required
+            />
+  `;
+  newIngrContainer.appendChild(removeButton);
+  ingredientsList.appendChild(newIngrContainer);
+  magic();
 }

@@ -160,28 +160,34 @@ h1 {
   outline: none;
 }
 
-.ingredients-container {
-  position: relative;
+.ingredients-list {
+  display: flex;
+  flex-direction: column;
 }
 
-.ingredients-container .remove-ingredient {
+.ingredient-container {
+  position: relative;
+  width: 40%;
+}
+
+.ingredients-list .remove-ingredient {
   position: absolute;
   top: 14px;
-  left: 146px;
+  left: 144px;
   cursor: pointer;
   font-size: 12px;
 }
 
-.ingredients-container .plus-ingredient {
+.ingredients-list .plus-ingredient {
   position: absolute;
   top: 11px;
-  left: 170px;
+  left: 168px;
   cursor: pointer;
   font-size: 18px;
 }
 
-.ingredients-container .plus-ingredient:hover,
-.ingredients-container .remove-ingredient:hover {
+.ingredients-list .plus-ingredient:hover,
+.ingredients-list .remove-ingredient:hover {
   color: rgb(75, 77, 58);
 }
 
