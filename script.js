@@ -26,7 +26,7 @@ async function showRecipes() {
 search.addEventListener("keydown", searchRecipe);
 
 function searchRecipe(e) {
-  console.log(e.target.value);
+  // console.log(e.target.value);
 }
 
 function createRecipeEl(recipe) {
@@ -67,9 +67,59 @@ function showModal(recipe) {
 addNewBtn.addEventListener("click", () => (addForm.style.display = "block"));
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
+  let error = false;
+  const titleEl = document.getElementById("input-title");
+  const directionsEl = document.getElementById("input-directions");
+  const list = [...ingredientsList.children];
+  titleEl.classList.remove("error");
+  directionsEl.classList.remove("error");
+  list.forEach((ingredientContainer) => {
+    ingredientContainer.children[0].classList.remove("error");
+  });
+
+  const title = titleEl.value.trim();
+  const directions = directionsEl.value.trim();
+
+  if (title.length === 0) {
+    titleEl.classList.add("error");
+    error = true;
+  }
+
+  if (directions.length === 0) {
+    directionsEl.classList.add("error");
+    error = true;
+  }
+
+  const addedIngredients = [];
+  list.forEach((ingredientContainer) => {
+    const ingredientValue = ingredientContainer.children[0].value.trim();
+    if (ingredientValue) {
+      addedIngredients.push(ingredientValue);
+    }
+  });
+
+  if (addedIngredients.length === 0) {
+    list.forEach((ingredientContainer) => {
+      ingredientContainer.children[0].classList.add("error");
+      error = true;
+    });
+  }
+
+  if (error) {
+    console.log("prazdne policka");
+    return;
+  }
+
+  const newRecipe = {
+    title: title,
+    ingredients: addedIngredients,
+    directions: directions,
+  };
+
+  console.log(newRecipe);
 });
 
-createIngredient("1243");
+createIngredient();
 
 closeModalBtn.addEventListener("click", closeModal);
 closeFormBtn.addEventListener("click", closeForm);
@@ -86,14 +136,14 @@ function closeForm() {
   inputs.forEach((input) => (input.value = ""));
 }
 
-function magic() {
+function updateList() {
   const currentList = [...ingredientsList.children];
   currentList.forEach((ingredient, idx) => {
     if (currentList.length - 1 === idx) {
       let addButton = ingredient.querySelector(".plus-ingredient");
       if (addButton) {
-        return
-      } 
+        return;
+      }
       addButton = document.createElement("span");
       addButton.classList.add("plus-ingredient");
       const icon = document.createElement("i");
@@ -125,7 +175,7 @@ function createIngredient() {
     }
     ingredientsList.removeChild(newIngrContainer);
 
-    magic();
+    updateList();
   });
 
   newIngrContainer.innerHTML = `
@@ -133,10 +183,9 @@ function createIngredient() {
               type="text"
               class="input ingredients"
               placeholder="Enter ingredient"
-              required
-            />
+              />
   `;
   newIngrContainer.appendChild(removeButton);
   ingredientsList.appendChild(newIngrContainer);
-  magic();
+  updateList();
 }

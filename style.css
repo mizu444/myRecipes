@@ -160,6 +160,10 @@ h1 {
   outline: none;
 }
 
+.form-content .input.error {
+  border: 1px solid red;
+}
+
 .ingredients-list {
   display: flex;
   flex-direction: column;
