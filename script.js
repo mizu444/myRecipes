@@ -12,12 +12,14 @@ const addNewBtn = document.getElementById("add-new-btn");
 const addForm = document.getElementById("add-form");
 const inputs = document.querySelectorAll(".input");
 const ingredientsList = document.querySelector(".ingredients-list");
+const errorEl = document.getElementById("error-message");
 
 showRecipes();
 
 async function showRecipes() {
-  const response = await fetch("/recipes.json");
-  // const response = await fetch("http://localhost:8080/recipes/index.php");
+  recipesContainer.innerHTML = "";
+  // const response = await fetch("/recipes.json");
+  const response = await fetch("http://localhost:8080/recipes/index.php");
   const data = await response.json();
 
   data.recipes.forEach(createRecipeEl);
@@ -69,6 +71,7 @@ addForm.addEventListener("submit", (e) => {
   e.preventDefault();
   let error = false;
   const titleEl = document.getElementById("input-title");
+  const imgEl = document.getElementById("input-img");
   const directionsEl = document.getElementById("input-directions");
   const list = [...ingredientsList.children];
   titleEl.classList.remove("error");
@@ -79,6 +82,7 @@ addForm.addEventListener("submit", (e) => {
 
   const title = titleEl.value.trim();
   const directions = directionsEl.value.trim();
+  const image = imgEl.value.trim() || null;
 
   if (title.length === 0) {
     titleEl.classList.add("error");
@@ -89,6 +93,8 @@ addForm.addEventListener("submit", (e) => {
     directionsEl.classList.add("error");
     error = true;
   }
+
+  errorEl.innerText = "";
 
   const addedIngredients = [];
   list.forEach((ingredientContainer) => {
@@ -106,17 +112,34 @@ addForm.addEventListener("submit", (e) => {
   }
 
   if (error) {
-    console.log("prazdne policka");
+    errorEl.innerText = "ta vypln sicko co mas!";
     return;
   }
 
   const newRecipe = {
-    title: title,
+    title,
     ingredients: addedIngredients,
-    directions: directions,
+    directions,
+    image,
   };
 
-  console.log(newRecipe);
+  fetch("http://localhost:8080/recipes/index.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+    },
+    body: new URLSearchParams(newRecipe),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw "Nastala chyba, skuste znova neskor.";
+      }
+      closeForm();
+      showRecipes();
+    })
+    .catch((error) => {
+      errorEl.innerText = error;
+    });
 });
 
 createIngredient();

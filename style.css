@@ -221,6 +221,13 @@ h1 {
   transform: scale(0.99);
 }
 
+.form-content .error-message {
+  color: red;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .modal-content {
   background-color: rgb(243, 237, 182);
   position: relative;
