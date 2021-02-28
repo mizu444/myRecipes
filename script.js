@@ -18,8 +18,8 @@ showRecipes();
 
 async function showRecipes() {
   recipesContainer.innerHTML = "";
-  // const response = await fetch("/recipes.json");
-  const response = await fetch("http://localhost:8080/recipes/index.php");
+  const response = await fetch("/recipes.json");
+  // const response = await fetch("http://localhost:8080/recipes/index.php");
   const data = await response.json();
 
   data.recipes.forEach(createRecipeEl);
@@ -39,14 +39,36 @@ function createRecipeEl(recipe) {
     <h3 class="title">${recipe.title}</h3>
     <img src="${recipe.image}"
     alt=""/>
+    <i class="fas fa-trash-alt delete"></i>
+    <i class="fas fa-pencil-alt edit"></i>
   `;
+
+  const recipeTitle = recipeEl.querySelector(".title");
 
   recipesContainer.appendChild(recipeEl);
 
-  recipeEl.addEventListener("click", () => {
+  recipeTitle.addEventListener("click", () => {
     showModal(recipe);
   });
+
+  const deleteBtn = recipeEl.querySelector(".delete");
+  const editBtn = recipeEl.querySelector(".edit");
+
+  deleteBtn.addEventListener("click", deleteRecipe);
+  editBtn.addEventListener("click", editRecipe);
+
+  function deleteRecipe() {
+    const result = confirm("Do you really want to delete this recipe?");
+    if (result) {
+      recipeEl.remove();
+    }
+  }
+
+  function editRecipe() {
+    confirm("Do you want to edit this recipe?");
+  }
 }
+
 
 function showModal(recipe) {
   modalTitle.innerText = recipe.title;
