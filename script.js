@@ -10,6 +10,7 @@ const modalIngredients = document.getElementById("modalIngredients");
 const modalDirections = document.getElementById("modalDirections");
 const addNewBtn = document.getElementById("add-new-btn");
 const addForm = document.getElementById("add-form");
+const editForm = document.getElementById("edit-form");
 const inputs = document.querySelectorAll(".input");
 const ingredientsList = document.querySelector(".ingredients-list");
 const errorEl = document.getElementById("error-message");
@@ -54,18 +55,28 @@ function createRecipeEl(recipe) {
   const deleteBtn = recipeEl.querySelector(".delete");
   const editBtn = recipeEl.querySelector(".edit");
 
-  deleteBtn.addEventListener("click", deleteRecipe);
-  editBtn.addEventListener("click", editRecipe);
+  deleteBtn.addEventListener("click", () => {
+    deleteRecipe(recipeEl)
+  });
+  editBtn.addEventListener("click", () => {
+    editRecipe(recipe)
+  });
+}
 
-  function deleteRecipe() {
-    const result = confirm("Do you really want to delete this recipe?");
-    if (result) {
-      recipeEl.remove();
-    }
+  function closeForm() {
+    addForm.style.display = "none";
+    inputs.forEach((input) => (input.value = ""));
   }
 
-  function editRecipe() {
-    confirm("Do you want to edit this recipe?");
+function editRecipe(recipe) {
+  // editForm.style.display = 'block'
+  console.log(recipe)
+}
+
+function deleteRecipe(recipeEl) {
+  const result = confirm("Do you really want to delete this recipe?");
+  if (result) {
+    recipeEl.remove();
   }
 }
 

@@ -38,7 +38,7 @@
         </div>
       </div>
 
-      <form class="form" id="add-form">
+      <form class="add form" id="add-form">
         <div class="form-content">
           <span class="close-form-btn" id="close-form-btn">&times;</span>
           <h3>Create new recipe</h3>
@@ -63,6 +63,38 @@
             class="input directions"
             id="input-directions"
             placeholder="Enter directions"
+            
+          ></textarea>
+          <button type="submit" class="submit-btn" id="submit">Submit</button>
+          <div class="error-message" id="error-message"></div>
+        </div>
+      </form>
+
+      <form class="edit form" id="edit-form">
+        <div class="form-content">
+          <span class="close-form-btn" id="close-form-btn">&times;</span>
+          <h3>Edit recipe</h3>
+          <input
+            type="text"
+            class="input title"
+            id="edit-title"
+            placeholder="Edit title of the recipe"
+            
+          />
+          <input
+            type="text"
+            class="input title"
+            id="edit-img"
+            placeholder="Edit image url"
+            
+          />
+
+          <div class="ingredients-list"></div>
+
+          <textarea
+            class="input directions"
+            id="edit-directions"
+            placeholder="Edit directions"
             
           ></textarea>
           <button type="submit" class="submit-btn" id="submit">Submit</button>
