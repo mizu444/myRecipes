@@ -281,7 +281,8 @@ h1 {
 }
 
 .close-modal-btn,
-.close-form-btn {
+#close-add-form-btn, 
+#close-edit-form-btn {
   position: absolute;
   top: 0;
   right: 12px;

@@ -4,7 +4,8 @@ const recipesContainer = document.querySelector(".recipes-container");
 const recipesEl = document.querySelectorAll(".recipe");
 const modal = document.getElementById("modal");
 const closeModalBtn = document.getElementById("close-modal-btn");
-const closeFormBtn = document.getElementById("close-form-btn");
+const closeAddFormBtn = document.getElementById("close-add-form-btn");
+const closeEditFormBtn = document.getElementById("close-edit-form-btn");
 const modalTitle = document.getElementById("modalTitle");
 const modalIngredients = document.getElementById("modalIngredients");
 const modalDirections = document.getElementById("modalDirections");
@@ -56,21 +57,23 @@ function createRecipeEl(recipe) {
   const editBtn = recipeEl.querySelector(".edit");
 
   deleteBtn.addEventListener("click", () => {
-    deleteRecipe(recipeEl)
+    deleteRecipe(recipeEl);
   });
   editBtn.addEventListener("click", () => {
-    editRecipe(recipe)
+    editRecipe(recipe);
   });
 }
 
-  function closeForm() {
-    addForm.style.display = "none";
-    inputs.forEach((input) => (input.value = ""));
-  }
+closeEditFormBtn.addEventListener("click", closeEditForm);
+
+function closeEditForm() {
+  editForm.style.display = "none";
+  inputs.forEach((input) => (input.value = ""));
+}
 
 function editRecipe(recipe) {
-  // editForm.style.display = 'block'
-  console.log(recipe)
+  editForm.style.display = "block";
+  console.log(recipe);
 }
 
 function deleteRecipe(recipeEl) {
@@ -79,7 +82,6 @@ function deleteRecipe(recipeEl) {
     recipeEl.remove();
   }
 }
-
 
 function showModal(recipe) {
   modalTitle.innerText = recipe.title;
@@ -178,7 +180,7 @@ addForm.addEventListener("submit", (e) => {
 createIngredient();
 
 closeModalBtn.addEventListener("click", closeModal);
-closeFormBtn.addEventListener("click", closeForm);
+closeAddFormBtn.addEventListener("click", closeForm);
 
 function closeModal() {
   modal.style.display = "none";
