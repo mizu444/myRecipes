@@ -15,6 +15,10 @@ const editForm = document.getElementById("edit-form");
 const inputs = document.querySelectorAll(".input");
 const ingredientsList = document.querySelector(".ingredients-list");
 const errorEl = document.getElementById("error-message");
+const editTitle = document.getElementById("edit-title");
+const editImg = document.getElementById("edit-img");
+const editDirections = document.getElementById("edit-directions");
+const editIngredients = document.getElementById("edit-ingredients");
 
 showRecipes();
 
@@ -73,8 +77,18 @@ function closeEditForm() {
 
 function editRecipe(recipe) {
   editForm.style.display = "block";
-  console.log(recipe);
+  editTitle.value = recipe.title;
+  editImg.value = recipe.image;
+  editDirections.value = recipe.directions;
+  recipe.ingredients.forEach((ingredient) => {
+    createIngredient(true, ingredient);
+  });
 }
+
+editForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log('recept');
+});
 
 function deleteRecipe(recipeEl) {
   const result = confirm("Do you really want to delete this recipe?");
@@ -194,8 +208,8 @@ function closeForm() {
   inputs.forEach((input) => (input.value = ""));
 }
 
-function updateList() {
-  const currentList = [...ingredientsList.children];
+function updateList(list) {
+  const currentList = [...list.children];
   currentList.forEach((ingredient, idx) => {
     if (currentList.length - 1 === idx) {
       let addButton = ingredient.querySelector(".plus-ingredient");
@@ -218,7 +232,14 @@ function updateList() {
   });
 }
 
-function createIngredient() {
+function createIngredient(edit = false, value = "") {
+  let list;
+  if (edit) {
+    list = editIngredients;
+  } else {
+    list = ingredientsList;
+  }
+
   const newIngrContainer = document.createElement("div");
   newIngrContainer.classList.add("ingredient-container");
 
@@ -228,12 +249,12 @@ function createIngredient() {
   removeIcon.classList = "fas fa-times";
   removeButton.appendChild(removeIcon);
   removeButton.addEventListener("click", () => {
-    if (ingredientsList.children.length === 1) {
+    if (list.children.length === 1) {
       return;
     }
-    ingredientsList.removeChild(newIngrContainer);
+    list.removeChild(newIngrContainer);
 
-    updateList();
+    updateList(list);
   });
 
   newIngrContainer.innerHTML = `
@@ -241,9 +262,10 @@ function createIngredient() {
               type="text"
               class="input ingredients"
               placeholder="Enter ingredient"
+              value="${value}"
               />
   `;
   newIngrContainer.appendChild(removeButton);
-  ingredientsList.appendChild(newIngrContainer);
-  updateList();
+  list.appendChild(newIngrContainer);
+  updateList(list);
 }
