@@ -15,17 +15,19 @@ const editForm = document.getElementById("edit-form");
 const inputs = document.querySelectorAll(".input");
 const ingredientsList = document.querySelector(".ingredients-list");
 const errorEl = document.getElementById("error-message");
+const editErrorEl = document.getElementById("edit-error-message");
 const editTitle = document.getElementById("edit-title");
 const editImg = document.getElementById("edit-img");
 const editDirections = document.getElementById("edit-directions");
 const editIngredients = document.getElementById("edit-ingredients");
+let originalTitle;
 
 showRecipes();
 
 async function showRecipes() {
   recipesContainer.innerHTML = "";
-  const response = await fetch("/recipes.json");
-  // const response = await fetch("http://localhost:8080/recipes/index.php");
+  // const response = await fetch("/recipes.json");
+  const response = await fetch("http://localhost:8080/recipes/index.php");
   const data = await response.json();
 
   data.recipes.forEach(createRecipeEl);
@@ -76,6 +78,7 @@ function closeEditForm() {
 }
 
 function editRecipe(recipe) {
+  originalTitle = recipe.title;
   editForm.style.display = "block";
   editTitle.value = recipe.title;
   editImg.value = recipe.image;
@@ -87,13 +90,105 @@ function editRecipe(recipe) {
 
 editForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log('recept');
+
+  let error = false;
+  const titleEl = document.getElementById("edit-title");
+  const imgEl = document.getElementById("edit-img");
+  const directionsEl = document.getElementById("edit-directions");
+  const list = [...editIngredients.children];
+  titleEl.classList.remove("error");
+  directionsEl.classList.remove("error");
+  list.forEach((ingredientContainer) => {
+    ingredientContainer.children[0].classList.remove("error");
+  });
+
+  const title = titleEl.value.trim();
+  const directions = directionsEl.value.trim();
+  const image = imgEl.value.trim() || null;
+
+  if (title.length === 0) {
+    titleEl.classList.add("error");
+    error = true;
+  }
+
+  if (directions.length === 0) {
+    directionsEl.classList.add("error");
+    error = true;
+  }
+
+  editErrorEl.innerText = "";
+
+  const editedIngredients = [];
+  list.forEach((ingredientContainer) => {
+    const ingredientValue = ingredientContainer.children[0].value.trim();
+    if (ingredientValue) {
+      editedIngredients.push(ingredientValue);
+    }
+  });
+
+  if (editedIngredients.length === 0) {
+    list.forEach((ingredientContainer) => {
+      ingredientContainer.children[0].classList.add("error");
+      error = true;
+    });
+  }
+
+  if (error) {
+    errorEl.innerText = "ta vypln sicko co mas!";
+    return;
+  }
+
+  const editedRecipe = {
+    title,
+    ingredients: editedIngredients,
+    directions,
+    image,
+  };
+
+  fetch("http://localhost:8080/recipes/index.php", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+    },
+    body: new URLSearchParams({ ...editedRecipe, originalTitle }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw "Nastala chyba, skuste znova neskor.";
+      }
+      closeEditForm();
+      showRecipes();
+    })
+    .catch((error) => {
+      editErrorEl.innerText = error;
+    });
+
+  // console.log(editedRecipe);
 });
 
 function deleteRecipe(recipeEl) {
   const result = confirm("Do you really want to delete this recipe?");
   if (result) {
-    recipeEl.remove();
+    // recipeEl.remove();
+    const title = recipeEl.querySelector(".title");
+    // console.log(title.innerText)
+    fetch("http://localhost:8080/recipes/index.php", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+      body: new URLSearchParams({ title: title.innerText }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw "Nastala chyba, skuste znova neskor.";
+        }
+        // closeForm();
+        showRecipes();
+      })
+      .catch((error) => {
+        alert(error);
+      });
   }
 }
 
