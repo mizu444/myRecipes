@@ -33,10 +33,17 @@ async function showRecipes() {
   data.recipes.forEach(createRecipeEl);
 }
 
-search.addEventListener("keydown", searchRecipe);
+search.addEventListener("keyup", searchRecipe);
 
 function searchRecipe(e) {
-  // console.log(e.target.value);
+  [...recipesContainer.children].forEach((recipeEl) => {
+    const title = recipeEl.querySelector(".title").innerText;
+    if (title.toLowerCase().includes(e.target.value.toLowerCase())) {
+      recipeEl.style.display = "block";
+    } else {
+      recipeEl.style.display = "none";
+    }
+  });
 }
 
 function createRecipeEl(recipe) {
